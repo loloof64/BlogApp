@@ -5,6 +5,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:vlog_app/services/database_helper.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  LocaleSettings.useDeviceLocale(); 
   runApp(TranslationProvider(child: const MyApp()));
 }
 
