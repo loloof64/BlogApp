@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future _openEditNoteDialog(int index) async {
+  Future _openEditNotePage(int index) async {
     final noteToEdit = _notes[index];
     await Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
@@ -152,6 +152,59 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  Future _openDeleteNoteDialog(int index) async {
+    final noteToEdit = _notes[index];
+    final confirmation = await showDialog<bool>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(t.home.delete_node_dialog_title),
+            content: Text(
+                t.home.deleted_note_dialog_message(Title: noteToEdit.title)),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.onSecondary,
+                    foregroundColor: Theme.of(context).colorScheme.secondary,
+                  ),
+                  child: Text(t.misc.buttons.cancel),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                    foregroundColor: Theme.of(context).colorScheme.primary,
+                  ),
+                  child: Text(t.misc.buttons.ok),
+                ),
+              ),
+            ],
+          );
+        });
+    if (confirmation == true) {
+      final id = noteToEdit.id;
+      await DatabaseHelper.instance.delete(id);
+
+      if (!mounted) return;
+      _refreshNotes();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(t.home.deleted_note),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,10 +217,11 @@ class _MyHomePageState extends State<MyHomePage> {
           builder: (context, constraints) {
             return Table(
               columnWidths: const {
-                1: FlexColumnWidth(0.3),
-                2: FlexColumnWidth(0.3),
-                3: FlexColumnWidth(0.3),
-                4: FlexColumnWidth(0.3),
+                0: FlexColumnWidth(0.5),
+                1: FlexColumnWidth(0.12),
+                2: FlexColumnWidth(0.12),
+                3: FlexColumnWidth(0.05),
+                4: FlexColumnWidth(0.05)
               },
               border: TableBorder.all(),
               children: List.generate(_notes.length, (index) {
@@ -209,7 +263,18 @@ class _MyHomePageState extends State<MyHomePage> {
                         icon: const Icon(
                           Icons.edit,
                         ),
-                        onPressed: () => _openEditNoteDialog(index),
+                        onPressed: () => _openEditNotePage(index),
+                      ),
+                    ),
+                  ),
+                  TableCell(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.delete,
+                        ),
+                        onPressed: () => _openDeleteNoteDialog(index),
                       ),
                     ),
                   ),

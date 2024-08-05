@@ -7,6 +7,9 @@ home:
   confirmations:
     created_note: "Note created"
     modified_note: "Note modified"
+  delete_node_dialog_title: "Delete note ?"
+  deleted_note_dialog_message: "Do you want to delete note '$title' ?"
+  deleted_note: "Deleted note"
 errors:
   empty_title: "Gave up : title cannot be empty !"
 new_note:

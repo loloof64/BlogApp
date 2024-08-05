@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 3
-/// Strings: 30 (10 per locale)
+/// Strings: 39 (13 per locale)
 ///
-/// Built on 2024-08-05 at 10:52 UTC
+/// Built on 2024-08-05 at 11:41 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -168,6 +168,9 @@ class _TranslationsHomeEn {
 
 	// Translations
 	late final _TranslationsHomeConfirmationsEn confirmations = _TranslationsHomeConfirmationsEn._(_root);
+	String get delete_node_dialog_title => 'Delete note ?';
+	String deleted_note_dialog_message({required Object Title}) => 'Do you want to delete note \'${Title}\' ?';
+	String get deleted_note => 'Deleted note';
 }
 
 // Path: errors
@@ -270,6 +273,9 @@ class _TranslationsHomeEs extends _TranslationsHomeEn {
 
 	// Translations
 	@override late final _TranslationsHomeConfirmationsEs confirmations = _TranslationsHomeConfirmationsEs._(_root);
+	@override String get delete_node_dialog_title => 'Borrar nota ?';
+	@override String deleted_note_dialog_message({required Object Title}) => '¿Quieres borrar la nota \'${Title}\'?';
+	@override String get deleted_note => 'Nota borrada';
 }
 
 // Path: errors
@@ -372,6 +378,9 @@ class _TranslationsHomeFr extends _TranslationsHomeEn {
 
 	// Translations
 	@override late final _TranslationsHomeConfirmationsFr confirmations = _TranslationsHomeConfirmationsFr._(_root);
+	@override String get delete_node_dialog_title => 'Effacer la note ?';
+	@override String deleted_note_dialog_message({required Object Title}) => 'Souhaitez-vous effacer la note \'${Title}\' ?';
+	@override String get deleted_note => 'Note effacée';
 }
 
 // Path: errors

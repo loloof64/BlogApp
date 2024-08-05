@@ -7,6 +7,9 @@ home:
   confirmations:
     created_note: "Nota creada"
     modified_note: "Nota modificada"
+  delete_node_dialog_title: "Borrar nota ?"
+  deleted_note_dialog_message: "¿Quieres borrar la nota '$title'?"
+  deleted_note: "Nota borrada"
 errors:
   empty_title: "Cancelado: ¡el título no puede estar vacío!"
 new_note:
