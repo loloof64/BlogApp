@@ -46,7 +46,12 @@ class DatabaseHelper {
     final db = await instance.database;
     db.execute(
       'INSERT INTO notes (creationDate, modificationDate, title, content) VALUES (?, ?, ?, ?)',
-      [note.creationDate, note.modificationDate, note.title, note.content],
+      [
+        note.creationDate.toIso8601String(),
+        note.modificationDate.toIso8601String(),
+        note.title,
+        note.content
+      ],
     );
     return db.lastInsertRowId;
   }
@@ -62,8 +67,8 @@ class DatabaseHelper {
     return db.execute(
       'UPDATE notes SET creationDate = ?, modificationDate = ?, title = ?, content = ? WHERE id = ?',
       [
-        note.creationDate,
-        note.modificationDate,
+        note.creationDate.toIso8601String(),
+        note.modificationDate.toIso8601String(),
         note.title,
         note.content,
         note.id

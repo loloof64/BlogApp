@@ -1,11 +1,11 @@
 class Note {
-  final int id;
+  int id;
   final DateTime modificationDate;
   final DateTime creationDate;
   final String title;
   final String content;
 
-  const Note({
+  Note({
     required this.id,
     required this.creationDate,
     required this.modificationDate,

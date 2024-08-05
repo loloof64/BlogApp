@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 3
-/// Strings: 3 (1 per locale)
+/// Strings: 18 (6 per locale)
 ///
-/// Built on 2024-08-04 at 13:43 UTC
+/// Built on 2024-08-05 at 08:29 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -143,6 +143,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 
 	// Translations
 	late final _TranslationsMiscEn misc = _TranslationsMiscEn._(_root);
+	late final _TranslationsHomeEn home = _TranslationsHomeEn._(_root);
 }
 
 // Path: misc
@@ -153,6 +154,50 @@ class _TranslationsMiscEn {
 
 	// Translations
 	String get app_title => 'Vlog application';
+	late final _TranslationsMiscButtonsEn buttons = _TranslationsMiscButtonsEn._(_root);
+}
+
+// Path: home
+class _TranslationsHomeEn {
+	_TranslationsHomeEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	late final _TranslationsHomeDialogsEn dialogs = _TranslationsHomeDialogsEn._(_root);
+	late final _TranslationsHomeErrorsEn errors = _TranslationsHomeErrorsEn._(_root);
+}
+
+// Path: misc.buttons
+class _TranslationsMiscButtonsEn {
+	_TranslationsMiscButtonsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get ok => 'Ok';
+	String get cancel => 'Cancel';
+}
+
+// Path: home.dialogs
+class _TranslationsHomeDialogsEn {
+	_TranslationsHomeDialogsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get new_note_dialog_title => 'Add a new note';
+	String get new_note_title_prompt => 'Note title';
+}
+
+// Path: home.errors
+class _TranslationsHomeErrorsEn {
+	_TranslationsHomeErrorsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get empty_title => 'Gave up : title cannot be empty !';
 }
 
 // Path: <root>
@@ -176,6 +221,7 @@ class _TranslationsEs extends Translations {
 
 	// Translations
 	@override late final _TranslationsMiscEs misc = _TranslationsMiscEs._(_root);
+	@override late final _TranslationsHomeEs home = _TranslationsHomeEs._(_root);
 }
 
 // Path: misc
@@ -186,6 +232,50 @@ class _TranslationsMiscEs extends _TranslationsMiscEn {
 
 	// Translations
 	@override String get app_title => 'Aplicación de vlog';
+	@override late final _TranslationsMiscButtonsEs buttons = _TranslationsMiscButtonsEs._(_root);
+}
+
+// Path: home
+class _TranslationsHomeEs extends _TranslationsHomeEn {
+	_TranslationsHomeEs._(_TranslationsEs root) : this._root = root, super._(root);
+
+	@override final _TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override late final _TranslationsHomeDialogsEs dialogs = _TranslationsHomeDialogsEs._(_root);
+	@override late final _TranslationsHomeErrorsEs errors = _TranslationsHomeErrorsEs._(_root);
+}
+
+// Path: misc.buttons
+class _TranslationsMiscButtonsEs extends _TranslationsMiscButtonsEn {
+	_TranslationsMiscButtonsEs._(_TranslationsEs root) : this._root = root, super._(root);
+
+	@override final _TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get ok => 'De acuerdo';
+	@override String get cancel => 'Anular';
+}
+
+// Path: home.dialogs
+class _TranslationsHomeDialogsEs extends _TranslationsHomeDialogsEn {
+	_TranslationsHomeDialogsEs._(_TranslationsEs root) : this._root = root, super._(root);
+
+	@override final _TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get new_note_dialog_title => 'Agregar una nueva nota';
+	@override String get new_note_title_prompt => 'Título de la nota';
+}
+
+// Path: home.errors
+class _TranslationsHomeErrorsEs extends _TranslationsHomeErrorsEn {
+	_TranslationsHomeErrorsEs._(_TranslationsEs root) : this._root = root, super._(root);
+
+	@override final _TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get empty_title => 'Cancelado: ¡el título no puede estar vacío!';
 }
 
 // Path: <root>
@@ -209,6 +299,7 @@ class _TranslationsFr extends Translations {
 
 	// Translations
 	@override late final _TranslationsMiscFr misc = _TranslationsMiscFr._(_root);
+	@override late final _TranslationsHomeFr home = _TranslationsHomeFr._(_root);
 }
 
 // Path: misc
@@ -219,4 +310,48 @@ class _TranslationsMiscFr extends _TranslationsMiscEn {
 
 	// Translations
 	@override String get app_title => 'Application vlog';
+	@override late final _TranslationsMiscButtonsFr buttons = _TranslationsMiscButtonsFr._(_root);
+}
+
+// Path: home
+class _TranslationsHomeFr extends _TranslationsHomeEn {
+	_TranslationsHomeFr._(_TranslationsFr root) : this._root = root, super._(root);
+
+	@override final _TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override late final _TranslationsHomeDialogsFr dialogs = _TranslationsHomeDialogsFr._(_root);
+	@override late final _TranslationsHomeErrorsFr errors = _TranslationsHomeErrorsFr._(_root);
+}
+
+// Path: misc.buttons
+class _TranslationsMiscButtonsFr extends _TranslationsMiscButtonsEn {
+	_TranslationsMiscButtonsFr._(_TranslationsFr root) : this._root = root, super._(root);
+
+	@override final _TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get ok => 'D\'accord';
+	@override String get cancel => 'Annuler';
+}
+
+// Path: home.dialogs
+class _TranslationsHomeDialogsFr extends _TranslationsHomeDialogsEn {
+	_TranslationsHomeDialogsFr._(_TranslationsFr root) : this._root = root, super._(root);
+
+	@override final _TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get new_note_dialog_title => 'Ajouter une nouvelle note';
+	@override String get new_note_title_prompt => 'Titre de la note';
+}
+
+// Path: home.errors
+class _TranslationsHomeErrorsFr extends _TranslationsHomeErrorsEn {
+	_TranslationsHomeErrorsFr._(_TranslationsFr root) : this._root = root, super._(root);
+
+	@override final _TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get empty_title => 'Abandon : le titre ne peut pas être vide !';
 }

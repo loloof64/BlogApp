@@ -1,2 +1,11 @@
 misc:
   app_title: "Vlog application"
+  buttons:
+    ok: "Ok"
+    cancel: "Cancel"
+home:
+  dialogs:
+    new_note_dialog_title: "Add a new note"
+    new_note_title_prompt: "Note title"
+  errors:
+    empty_title: "Gave up : title cannot be empty !"

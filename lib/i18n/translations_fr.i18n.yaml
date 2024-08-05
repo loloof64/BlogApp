@@ -1,2 +1,11 @@
 misc:
   app_title: "Application vlog"
+  buttons:
+    ok: "D'accord"
+    cancel: "Annuler"
+home:
+  dialogs:
+    new_note_dialog_title: "Ajouter une nouvelle note"
+    new_note_title_prompt: "Titre de la note"
+  errors:
+    empty_title: "Abandon : le titre ne peut pas être vide !"
