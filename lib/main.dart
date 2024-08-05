@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:vlog_app/data/note.dart';
 import 'package:vlog_app/i18n/translations.g.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:vlog_app/services/database_helper.dart';
+import 'dart:ui' as ui;
+
+String formatDateTimeWithSystemLocale(DateTime dateTime) {
+  // Obtenir la locale du système
+  Locale systemLocale = ui.PlatformDispatcher.instance.locale;
+
+  // Créer un formateur de date avec la locale du système
+  DateFormat formatter = DateFormat.yMMMd(systemLocale.toString()).add_jm();
+
+  // Formater la date
+  return formatter.format(dateTime);
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -147,19 +161,28 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         child: LayoutBuilder(
           builder: (context, constraints) {
+            final locale = Localizations.localeOf(context);
+
             return Table(
               columnWidths: const {
-                0: FlexColumnWidth(0.2),
-                1: FlexColumnWidth(0.5),
+                1: FlexColumnWidth(0.3),
+                2: FlexColumnWidth(0.3),
+                3: FlexColumnWidth(0.3),
               },
               border: TableBorder.all(),
               children: List.generate(_notes.length, (index) {
+                final formattedCreationDate =
+                    formatDateTimeWithSystemLocale(_notes[index].creationDate);
+                final formattedModificationDate =
+                    formatDateTimeWithSystemLocale(
+                        _notes[index].modificationDate);
+
                 return TableRow(children: [
                   TableCell(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        _notes[index].id.toString(),
+                        _notes[index].title.toString(),
                       ),
                     ),
                   ),
@@ -167,7 +190,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        _notes[index].title.toString(),
+                        formattedCreationDate,
+                      ),
+                    ),
+                  ),
+                  TableCell(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        formattedModificationDate,
                       ),
                     ),
                   ),
