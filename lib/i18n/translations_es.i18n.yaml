@@ -4,13 +4,14 @@ misc:
     ok: "De acuerdo"
     cancel: "Anular"
 home:
-  dialogs:
-    new_note_dialog_title: "Agregar una nueva nota"
-    new_note_title_prompt: "Título de la nota"
-    edit_note_dialog_title: "Editar la nota"
-    edit_note_title_prompt: "Título de la nota"
   confirmations:
     created_note: "Nota creada"
     modified_note: "Nota modificada"
-  errors:
-    empty_title: "Cancelado: ¡el título no puede estar vacío!"
+errors:
+  empty_title: "Cancelado: ¡el título no puede estar vacío!"
+new_note:
+  page_title: "Agregar una nueva nota"
+  title_prompt: "Título de la nota"
+edit_note:
+  page_title: "Editar la nota"
+  title_prompt: "Título de la nota"

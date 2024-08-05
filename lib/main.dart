@@ -3,17 +3,14 @@ import 'package:intl/intl.dart';
 import 'package:vlog_app/data/note.dart';
 import 'package:vlog_app/i18n/translations.g.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:vlog_app/pages/edit_note_page.dart';
+import 'package:vlog_app/pages/new_note_page.dart';
 import 'package:vlog_app/services/database_helper.dart';
 import 'dart:ui' as ui;
 
 String formatDateTimeWithSystemLocale(DateTime dateTime) {
-  // Obtenir la locale du système
   Locale systemLocale = ui.PlatformDispatcher.instance.locale;
-
-  // Créer un formateur de date avec la locale du système
   DateFormat formatter = DateFormat.yMMMd(systemLocale.toString()).add_jm();
-
-  // Formater la date
   return formatter.format(dateTime);
 }
 
@@ -53,11 +50,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Note> _notes = [];
-  final TextEditingController _newNoteTitleController = TextEditingController();
-  final TextEditingController _editNoteTitleController =
-      TextEditingController();
-  final TextEditingController _editNoteContentController =
-      TextEditingController();
 
   @override
   void initState() {
@@ -67,9 +59,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void dispose() {
-    _editNoteContentController.dispose();
-    _editNoteTitleController.dispose();
-    _newNoteTitleController.dispose();
     super.dispose();
   }
 
@@ -78,16 +67,18 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
-  Future _doCreateNewNote() async {
-    final title = _newNoteTitleController.text;
+  Future _doCreateNewNote({
+    required String title,
+    required String content,
+  }) async {
     if (title.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(t.home.errors.empty_title),
+          content: Text(t.errors.empty_title),
         ),
       );
+      return;
     }
-
     final creationDate = DateTime.now();
 
     final newNote = Note(
@@ -95,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
       creationDate: creationDate,
       modificationDate: creationDate,
       title: title,
-      content: "",
+      content: content,
     );
     await DatabaseHelper.instance.insert(newNote);
 
@@ -112,7 +103,16 @@ class _MyHomePageState extends State<MyHomePage> {
     required int index,
     required String title,
     required String content,
-  })  async {
+  }) async {
+    if (title.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(t.errors.empty_title),
+        ),
+      );
+      return;
+    }
+
     final modificationDate = DateTime.now();
     Note currentNote = _notes[index];
     currentNote.title = title;
@@ -132,130 +132,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future _openEditNoteDialog(int index) async {
     final noteToEdit = _notes[index];
-    _editNoteTitleController.text = noteToEdit.title;
-    _editNoteContentController.text = noteToEdit.content;
-    await showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(t.home.dialogs.edit_note_dialog_title),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          t.home.dialogs.edit_note_title_prompt,
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextField(
-                            controller: _editNoteTitleController,
-                            maxLines: 1,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                TextField(
-                  controller: _editNoteContentController,
-                ),
-              ],
-            ),
-            actions: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.onSecondary,
-                  foregroundColor: Theme.of(context).colorScheme.secondary,
-                ),
-                child: Text(t.misc.buttons.cancel),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  _doEditNote(
-                    index: index,
-                    title: _editNoteTitleController.text,
-                    content: _editNoteContentController.text,
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.onPrimary,
-                  foregroundColor: Theme.of(context).colorScheme.primary,
-                ),
-                child: Text(t.misc.buttons.ok),
-              ),
-            ],
-          );
-        });
+    await Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) {
+        return EditNotePage(
+          index: index,
+          startTitle: noteToEdit.title,
+          startContent: noteToEdit.content,
+          onValidation: _doEditNote,
+        );
+      }),
+    );
   }
 
   Future _purposeCreateNote() async {
-    await showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(t.home.dialogs.new_note_dialog_title),
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(t.home.dialogs.new_note_title_prompt),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      controller: _newNoteTitleController,
-                      maxLines: 1,
-                    ),
-                  ),
-                )
-              ],
-            ),
-            actions: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.onSecondary,
-                  foregroundColor: Theme.of(context).colorScheme.secondary,
-                ),
-                child: Text(t.misc.buttons.cancel),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  _doCreateNewNote();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.onPrimary,
-                  foregroundColor: Theme.of(context).colorScheme.primary,
-                ),
-                child: Text(t.misc.buttons.ok),
-              ),
-            ],
-          );
-        });
+    await Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) {
+        return NewNotePage(onValidation: _doCreateNewNote);
+      }),
+    );
   }
 
   @override
