@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 3
-/// Strings: 18 (6 per locale)
+/// Strings: 30 (10 per locale)
 ///
-/// Built on 2024-08-05 at 08:29 UTC
+/// Built on 2024-08-05 at 09:50 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -165,6 +165,7 @@ class _TranslationsHomeEn {
 
 	// Translations
 	late final _TranslationsHomeDialogsEn dialogs = _TranslationsHomeDialogsEn._(_root);
+	late final _TranslationsHomeConfirmationsEn confirmations = _TranslationsHomeConfirmationsEn._(_root);
 	late final _TranslationsHomeErrorsEn errors = _TranslationsHomeErrorsEn._(_root);
 }
 
@@ -188,6 +189,19 @@ class _TranslationsHomeDialogsEn {
 	// Translations
 	String get new_note_dialog_title => 'Add a new note';
 	String get new_note_title_prompt => 'Note title';
+	String get edit_note_dialog_title => 'Edit note';
+	String get edit_note_title_prompt => 'Note title';
+}
+
+// Path: home.confirmations
+class _TranslationsHomeConfirmationsEn {
+	_TranslationsHomeConfirmationsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get created_note => 'Note created';
+	String get modified_note => 'Note modified';
 }
 
 // Path: home.errors
@@ -243,6 +257,7 @@ class _TranslationsHomeEs extends _TranslationsHomeEn {
 
 	// Translations
 	@override late final _TranslationsHomeDialogsEs dialogs = _TranslationsHomeDialogsEs._(_root);
+	@override late final _TranslationsHomeConfirmationsEs confirmations = _TranslationsHomeConfirmationsEs._(_root);
 	@override late final _TranslationsHomeErrorsEs errors = _TranslationsHomeErrorsEs._(_root);
 }
 
@@ -266,6 +281,19 @@ class _TranslationsHomeDialogsEs extends _TranslationsHomeDialogsEn {
 	// Translations
 	@override String get new_note_dialog_title => 'Agregar una nueva nota';
 	@override String get new_note_title_prompt => 'Título de la nota';
+	@override String get edit_note_dialog_title => 'Editar la nota';
+	@override String get edit_note_title_prompt => 'Título de la nota';
+}
+
+// Path: home.confirmations
+class _TranslationsHomeConfirmationsEs extends _TranslationsHomeConfirmationsEn {
+	_TranslationsHomeConfirmationsEs._(_TranslationsEs root) : this._root = root, super._(root);
+
+	@override final _TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get created_note => 'Nota creada';
+	@override String get modified_note => 'Nota modificada';
 }
 
 // Path: home.errors
@@ -321,6 +349,7 @@ class _TranslationsHomeFr extends _TranslationsHomeEn {
 
 	// Translations
 	@override late final _TranslationsHomeDialogsFr dialogs = _TranslationsHomeDialogsFr._(_root);
+	@override late final _TranslationsHomeConfirmationsFr confirmations = _TranslationsHomeConfirmationsFr._(_root);
 	@override late final _TranslationsHomeErrorsFr errors = _TranslationsHomeErrorsFr._(_root);
 }
 
@@ -344,6 +373,19 @@ class _TranslationsHomeDialogsFr extends _TranslationsHomeDialogsEn {
 	// Translations
 	@override String get new_note_dialog_title => 'Ajouter une nouvelle note';
 	@override String get new_note_title_prompt => 'Titre de la note';
+	@override String get edit_note_dialog_title => 'Éditer la note';
+	@override String get edit_note_title_prompt => 'Titre de la note';
+}
+
+// Path: home.confirmations
+class _TranslationsHomeConfirmationsFr extends _TranslationsHomeConfirmationsEn {
+	_TranslationsHomeConfirmationsFr._(_TranslationsFr root) : this._root = root, super._(root);
+
+	@override final _TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get created_note => 'Note créée';
+	@override String get modified_note => 'Note modifiée';
 }
 
 // Path: home.errors

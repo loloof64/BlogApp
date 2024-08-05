@@ -1,9 +1,9 @@
 class Note {
   int id;
-  final DateTime modificationDate;
+  DateTime modificationDate;
   final DateTime creationDate;
-  final String title;
-  final String content;
+  String title;
+  String content;
 
   Note({
     required this.id,

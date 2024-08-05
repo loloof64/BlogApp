@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:vlog_app/data/note.dart';
 import 'package:vlog_app/i18n/translations.g.dart';
@@ -55,6 +54,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Note> _notes = [];
   final TextEditingController _newNoteTitleController = TextEditingController();
+  final TextEditingController _editNoteTitleController =
+      TextEditingController();
+  final TextEditingController _editNoteContentController =
+      TextEditingController();
 
   @override
   void initState() {
@@ -64,6 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void dispose() {
+    _editNoteContentController.dispose();
+    _editNoteTitleController.dispose();
     _newNoteTitleController.dispose();
     super.dispose();
   }
@@ -93,7 +98,111 @@ class _MyHomePageState extends State<MyHomePage> {
       content: "",
     );
     await DatabaseHelper.instance.insert(newNote);
+
+    if (!mounted) return;
     _refreshNotes();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(t.home.confirmations.created_note),
+      ),
+    );
+  }
+
+  Future _doEditNote({
+    required int index,
+    required String title,
+    required String content,
+  })  async {
+    final modificationDate = DateTime.now();
+    Note currentNote = _notes[index];
+    currentNote.title = title;
+    currentNote.content = content;
+    currentNote.modificationDate = modificationDate;
+    await DatabaseHelper.instance.update(currentNote);
+
+    if (!mounted) return;
+
+    _refreshNotes();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(t.home.confirmations.modified_note),
+      ),
+    );
+  }
+
+  Future _openEditNoteDialog(int index) async {
+    final noteToEdit = _notes[index];
+    _editNoteTitleController.text = noteToEdit.title;
+    _editNoteContentController.text = noteToEdit.content;
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(t.home.dialogs.edit_note_dialog_title),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          t.home.dialogs.edit_note_title_prompt,
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextField(
+                            controller: _editNoteTitleController,
+                            maxLines: 1,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                TextField(
+                  controller: _editNoteContentController,
+                ),
+              ],
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.onSecondary,
+                  foregroundColor: Theme.of(context).colorScheme.secondary,
+                ),
+                child: Text(t.misc.buttons.cancel),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _doEditNote(
+                    index: index,
+                    title: _editNoteTitleController.text,
+                    content: _editNoteContentController.text,
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                  foregroundColor: Theme.of(context).colorScheme.primary,
+                ),
+                child: Text(t.misc.buttons.ok),
+              ),
+            ],
+          );
+        });
   }
 
   Future _purposeCreateNote() async {
@@ -116,9 +225,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       controller: _newNoteTitleController,
-                      decoration: InputDecoration(
-                        hintText: t.home.dialogs.new_note_title_prompt,
-                      ),
+                      maxLines: 1,
                     ),
                   ),
                 )
@@ -161,13 +268,12 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final locale = Localizations.localeOf(context);
-
             return Table(
               columnWidths: const {
                 1: FlexColumnWidth(0.3),
                 2: FlexColumnWidth(0.3),
                 3: FlexColumnWidth(0.3),
+                4: FlexColumnWidth(0.3),
               },
               border: TableBorder.all(),
               children: List.generate(_notes.length, (index) {
@@ -199,6 +305,17 @@ class _MyHomePageState extends State<MyHomePage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         formattedModificationDate,
+                      ),
+                    ),
+                  ),
+                  TableCell(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.edit,
+                        ),
+                        onPressed: () => _openEditNoteDialog(index),
                       ),
                     ),
                   ),

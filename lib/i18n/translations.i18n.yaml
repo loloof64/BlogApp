@@ -7,5 +7,10 @@ home:
   dialogs:
     new_note_dialog_title: "Add a new note"
     new_note_title_prompt: "Note title"
+    edit_note_dialog_title: "Edit note"
+    edit_note_title_prompt: "Note title"
+  confirmations:
+    created_note: "Note created"
+    modified_note: "Note modified"
   errors:
     empty_title: "Gave up : title cannot be empty !"

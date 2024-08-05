@@ -7,5 +7,10 @@ home:
   dialogs:
     new_note_dialog_title: "Ajouter une nouvelle note"
     new_note_title_prompt: "Titre de la note"
+    edit_note_dialog_title: "Éditer la note"
+    edit_note_title_prompt: "Titre de la note"
+  confirmations:
+    created_note: "Note créée"
+    modified_note: "Note modifiée"
   errors:
     empty_title: "Abandon : le titre ne peut pas être vide !"
