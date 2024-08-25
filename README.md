@@ -1,3 +1,3 @@
 # VlogApp
 
-A vlog application
+A blog application
